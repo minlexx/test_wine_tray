@@ -158,9 +158,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 }
 
 
+void print_wine_version() {
+    static const char * (CDECL *pwine_get_version)(void);
+    HMODULE hntdll = GetModuleHandle("ntdll.dll");
+    if( hntdll ) {
+        pwine_get_version = (void *)GetProcAddress(hntdll, "wine_get_version");
+        if(pwine_get_version) {
+            printf( "Running on Wine: %s\n", pwine_get_version() );
+        } else {
+            printf( "Not running on wine!\n" );
+        }
+    } else {
+        printf( "Not running on Windows NT!\n" );
+    }
+}
+
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		LPSTR lpszCmdLine, int nShowCmd)
 {
+    print_wine_version();
+    
 	WNDCLASSEX wc;
 	memset(&wc, 0, sizeof(wc));
 	wc.cbSize = sizeof(wc);

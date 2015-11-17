@@ -122,11 +122,35 @@ void on_tray(int icon_id, UINT uMsg) {
 	switch(icon_id) {
 		case MY_TRAY_ICON_ID: {
 			switch(uMsg) {
+                                case WM_LBUTTONDOWN:
+					printf("tray: WM_LBUTTONDOWN\n");
+					break;
 				case WM_LBUTTONUP:
-					printf("tray: left click\n");
+					printf("tray: WM_LBUTTONUP\n");
+					break;
+                                case WM_RBUTTONDOWN:
+					printf("tray: WM_RBUTTONDOWN\n");
 					break;
 				case WM_RBUTTONUP:
-					printf("tray: right click\n");
+					printf("tray: WM_RBUTTONUP\n");
+					break;
+                                case WM_MBUTTONDOWN:
+					printf("tray: WM_MBUTTONDOWN\n");
+					break;
+				case WM_MBUTTONUP:
+					printf("tray: WM_MBUTTONUP\n");
+					break;
+                                case WM_MOUSEMOVE:
+					printf("tray: WM_MOUSEMOVE\n");
+					break;
+                                case WM_LBUTTONDBLCLK:
+					printf("tray: WM_LBUTTONDBLCLK\n");
+					break;
+                                case WM_RBUTTONDBLCLK:
+					printf("tray: WM_RBUTTONDBLCLK\n");
+					break;
+                                case WM_MBUTTONDBLCLK:
+					printf("tray: WM_MBUTTONDBLCLK\n");
 					break;
 			}
 		} break;

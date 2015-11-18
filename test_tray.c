@@ -38,7 +38,7 @@ static void notifyicondata_init(NOTIFYICONDATA *pdata) {
 	pdata->dwState = 0;
 	pdata->dwStateMask = NIS_HIDDEN | NIS_SHAREDICON;
 	pdata->uVersion = NOTIFYICON_VERSION;
-	// only set tese to display balloon
+	// only set these to display balloon popup
 	// TCHAR szInfo[256];
 	// TCHAR szInfoTitle[64];
 	// DWORD dwInfoFlags;

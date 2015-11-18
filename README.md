@@ -5,16 +5,15 @@ To build, you must have wine installed, and all its tools (winebuild, winemaker,
 
 ### Checkout repo:
 ```
-https://github.com/minlexx/test_wine_tray.git
+git clone https://github.com/minlexx/test_wine_tray.git
+cd test_wine_tray
 ```
 
-### Makefile
+### Generate Makefile (optional)
 If you want to generate Makefile yourself, use:
 ```
-cd test_wine_tray
 winemaker --wine32 .
 ```
-or just skip this step.
 
 ### Compile:
 ```
@@ -23,5 +22,5 @@ make
 
 ### Run:
 ```
-./winelib_test_tray.exe
+WINEDEBUG=+systray ./winelib_test_tray.exe
 ```

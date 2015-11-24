@@ -119,42 +119,51 @@ void on_command(HWND hWnd, HWND hWndControl, int control_id, int notify_id) {
 
 
 void on_tray(int icon_id, UINT uMsg) {
-	switch(icon_id) {
-		case MY_TRAY_ICON_ID: {
-			switch(uMsg) {
-                                case WM_LBUTTONDOWN:
-					printf("tray: WM_LBUTTONDOWN\n");
-					break;
-				case WM_LBUTTONUP:
-					printf("tray: WM_LBUTTONUP\n");
-					break;
-                                case WM_RBUTTONDOWN:
-					printf("tray: WM_RBUTTONDOWN\n");
-					break;
-				case WM_RBUTTONUP:
-					printf("tray: WM_RBUTTONUP\n");
-					break;
-                                case WM_MBUTTONDOWN:
-					printf("tray: WM_MBUTTONDOWN\n");
-					break;
-				case WM_MBUTTONUP:
-					printf("tray: WM_MBUTTONUP\n");
-					break;
-                                case WM_MOUSEMOVE:
-					printf("tray: WM_MOUSEMOVE\n");
-					break;
-                                case WM_LBUTTONDBLCLK:
-					printf("tray: WM_LBUTTONDBLCLK\n");
-					break;
-                                case WM_RBUTTONDBLCLK:
-					printf("tray: WM_RBUTTONDBLCLK\n");
-					break;
-                                case WM_MBUTTONDBLCLK:
-					printf("tray: WM_MBUTTONDBLCLK\n");
-					break;
-			}
-		} break;
-	}
+    switch(icon_id) {
+        case MY_TRAY_ICON_ID: {
+        switch(uMsg) {
+            case WM_LBUTTONDOWN:
+                printf("tray: WM_LBUTTONDOWN\n");
+                break;
+            case WM_LBUTTONUP:
+                printf("tray: WM_LBUTTONUP\n");
+                break;
+            case WM_RBUTTONDOWN:
+                printf("tray: WM_RBUTTONDOWN\n");
+                break;
+            case WM_RBUTTONUP:
+                printf("tray: WM_RBUTTONUP\n");
+                break;
+            case WM_MBUTTONDOWN:
+                printf("tray: WM_MBUTTONDOWN\n");
+                break;
+            case WM_MBUTTONUP:
+                printf("tray: WM_MBUTTONUP\n");
+                break;
+            case WM_MOUSEMOVE:
+                printf("tray: WM_MOUSEMOVE\n");
+                break;
+            case WM_LBUTTONDBLCLK:
+                printf("tray: WM_LBUTTONDBLCLK\n");
+                break;
+            case WM_RBUTTONDBLCLK:
+                printf("tray: WM_RBUTTONDBLCLK\n");
+                break;
+            case WM_MBUTTONDBLCLK:
+                printf("tray: WM_MBUTTONDBLCLK\n");
+                break;
+            case WM_MOUSEWHEEL:
+                printf("tray: WM_MOUSEWHEEL\n");
+                break;
+            case WM_VSCROLL:
+                printf("tray: WM_VSCROLL\n");
+                break;
+            case WM_HSCROLL:
+                printf("tray: WM_HSCROLL\n");
+                break;
+            }
+        } break;
+    }
 }
 
 
@@ -259,6 +268,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		x, y, button_width, button_height,
 		g_hWnd, (HMENU)IDC_POPUP, hInstance, NULL);
 	x += button_width + button_spacing;
+    
+    printf( "MY_TRAYMESSAGE = %d, my hWnd = %p\n", (int)MY_TRAYMESSAGE, g_hWnd );
 	
 	MSG msg;
 	while(GetMessage(&msg, NULL, 0, 0)) {

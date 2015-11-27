@@ -16,6 +16,8 @@
 #define IDC_ADD_ICON 101
 #define IDC_DEL_ICON 102
 #define IDC_POPUP 103
+#define IDC_CHANGE_ICON 104
+#define IDC_CHANGE_TIP 105
 
 // wine headers fix
 #define NOTIFYICON_VERSION NOTIFY_VERSION
@@ -100,6 +102,46 @@ void tray_popup(HWND hWnd) {
 }
 
 
+void tray_change_icon(HWND hWnd) {
+    if( !g_added ) {
+		fprintf(stderr, "tray icon not added - cannot modify icon!\n");
+		return;
+	}
+	printf("change icon\n");
+	
+	NOTIFYICONDATA data;
+	notifyicondata_init(&data);
+    
+    // other icon
+    data.hIcon = LoadIcon(NULL, IDI_INFORMATION);
+	
+	BOOL res = Shell_NotifyIcon(NIM_MODIFY, &data);
+	if( !res ) {
+		fprintf(stderr, "Shell_NotifyIcon(NIM_MODIFY) failed!\n");
+	}
+}
+
+
+void tray_change_tip(HWND hWnd) {
+    if( !g_added ) {
+		fprintf(stderr, "tray icon not added - cannot modify icon!\n");
+		return;
+	}
+	printf("change tip\n");
+	
+	NOTIFYICONDATA data;
+	notifyicondata_init(&data);
+    
+    // other tip
+    wsprintfA(data.szTip, "GetTickCount() = %u", GetTickCount());
+	
+	BOOL res = Shell_NotifyIcon(NIM_MODIFY, &data);
+	if( !res ) {
+		fprintf(stderr, "Shell_NotifyIcon(NIM_MODIFY) failed!\n");
+	}
+}
+
+
 void on_command(HWND hWnd, HWND hWndControl, int control_id, int notify_id) {
 	switch(control_id) {
 		case IDC_ADD_ICON:
@@ -113,6 +155,14 @@ void on_command(HWND hWnd, HWND hWndControl, int control_id, int notify_id) {
 		case IDC_POPUP:
 			if( notify_id == BN_CLICKED)
 				tray_popup(hWnd);
+			break;
+        case IDC_CHANGE_ICON:
+			if( notify_id == BN_CLICKED)
+				tray_change_icon(hWnd);
+			break;
+        case IDC_CHANGE_TIP:
+			if( notify_id == BN_CLICKED)
+				tray_change_tip(hWnd);
 			break;
 	}
 }
@@ -227,8 +277,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		return EXIT_FAILURE;
 	}
 	
-	int width = 400;
-	int height = 300;
+	int width = 500;
+	int height = 250;
 	int x = (GetSystemMetrics(SM_CXSCREEN) - width) / 2;
 	int y = (GetSystemMetrics(SM_CYSCREEN) - height) / 2;
 	
@@ -267,6 +317,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		WS_CHILD | WS_VISIBLE,
 		x, y, button_width, button_height,
 		g_hWnd, (HMENU)IDC_POPUP, hInstance, NULL);
+	x += button_width + button_spacing;
+    
+    CreateWindowEx(0,
+		WC_BUTTON, TEXT("Change icon"),
+		WS_CHILD | WS_VISIBLE,
+		x, y, button_width, button_height,
+		g_hWnd, (HMENU)IDC_CHANGE_ICON, hInstance, NULL);
+	x += button_width + button_spacing;
+    
+    CreateWindowEx(0,
+		WC_BUTTON, TEXT("Change tip"),
+		WS_CHILD | WS_VISIBLE,
+		x, y, button_width, button_height,
+		g_hWnd, (HMENU)IDC_CHANGE_TIP, hInstance, NULL);
 	x += button_width + button_spacing;
     
     printf( "MY_TRAYMESSAGE = %d, my hWnd = %p\n", (int)MY_TRAYMESSAGE, g_hWnd );
